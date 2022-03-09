@@ -1,0 +1,319 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "List",
+    "version": 1.0.2,
+    "title": "Todo-List",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "tim.middendorf.tm@gmail.com"
+    }
+  },
+  "paths": {
+    "/list/{list_id}": {
+      "get": {
+        "summary": "Einträge der Todo-List",
+        "operationId": "getList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "description": "list id",
+            "required": true,
+			"type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Erfolgreich.",
+            {
+			"schema": {
+			  			 "type": "array ",
+			  "item": {
+			     "$ref": "#/definitions/Entry"
+			  }
+			},
+          "404": {
+            "description": "Liste nicht gefunden."
+            }
+           }
+          },
+        },
+      },
+    "/list/{list_id}": {
+      "delete": {
+        "summary": "Löscht Todo-Liste und alle Einträge",
+        "operationId": "Lösch Todo-Liste alle Ienträge der List id",
+        "parameters": [
+            {
+            "in": "path",
+			"name": "list_id",
+            "description": "list id",
+            "required": true,
+			"type": "integer",
+            "format": "int64"
+          }
+              ],
+        "responses": {
+          "200": {
+            "description": "Liste löschen erfolgreich.",
+          },
+          "404": {
+            "description": "Liste nicht gefunden."
+          }
+        },
+      }
+    },
+    "/list": {
+      "post": {
+        "summary": "Neue Liste hinzufügen",
+        "operationId": "addList",
+        "parameters": [
+          {
+			"in": "body",
+            "name": "body",
+            "description": "list objekt",
+            "required": true,
+			"schema": {
+             "$ref": "#/definitions/List"
+              },
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "Einfügen erfolgreich.",
+            "schema": {
+                "$ref": "#/definitions/List"
+              }
+            }
+          },
+          "500": {
+            "description": "Server antwortet nicht."
+          }
+        },
+      },
+    "/list/{list_id}/entry": {
+      "post": {
+        "summary": "Eintrag bestehender Liste hinzufügen",
+        "operationId": "addentry",
+        "parameters": [
+          {
+			"in": "path",
+            "name": "list_id",
+            "description": "add entry",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+			"schema": {
+             "$ref": "#/definitions/Entry"
+		      	   }
+           }
+        ],
+        "responses": {
+          "200": {
+            "description": "Einfügen erflogreich.",
+          },
+          "500": {
+            "description": "Server antwortet nicht."
+          }
+        },
+      },
+    },
+    "/list/{list_id}/entry/{entry_id}": {
+      "post": {
+        "summary": "Bestehenden Eintrag aktualisieren",
+        "operationId": "upateentry",
+        "parameters": [
+          {
+			"in": "path",
+            "name": "entry_id",
+            "description": "update entry",
+            "required": true,
+            "type": "integer",
+            "format": "int64",
+			"schema": {
+              "$ref": "#/definitions/Entry"
+                }
+              }
+          ],
+        "responses": {
+          "200": {
+            "description": "Aktualisieren Erfolgreich.",
+			  },
+		  "404": {
+            "description": "Übergebene Liste oder übergebener Eintrag wurde nicht gefunden."
+			         }
+             },
+           },
+    "/list/{list_id}/entry/{entry_id}": {
+      "delete": {
+        "summary": "Bestehnden Eintrag löschen",
+        "operationId": "deletentry",
+        "parameters": [
+          {
+			"in": "path",
+            "name": "entry_id",
+            "description": "delete entry",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+        ],
+        "responses": {
+          "200": {
+            "description": "Löschen erflogreich.",
+			   },
+		  "404": {
+            "description": "Liste oder Eintrag nicht gefunden."
+			    }
+        },
+        
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Liste aller Benutzer",
+        "operationId": "getusers",
+        "parameters": [
+		],
+        "responses": {
+          "200": {
+            "description": "Abrufen der User erfolgreich.",
+			"schema": {
+              "$ref": "#/definitions/User"
+               }	
+              },
+			 "500": {
+              "description": "Server ist nicht erreichbar."
+            },
+          }
+        },
+      }
+    },
+    "/user": {
+      "post": {
+        "summary": "Füge neuen benutzer hinzu",
+        "operationId": "adduser",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "add user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Einfügen des Users erfolgreich durchgeführt",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Server ist nicht erreichbar."
+          }
+        }
+      }
+    },
+    "/user/{user_id}": {
+      "delete": {
+        "summary": "Löscht Benutzer",
+        "operationId": "deleteuser",
+        "parameters": [
+          {
+			"in": "path",
+            "name": "user_id",
+            "description": "delete user",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Löschen erfolgreich",
+          },
+          "404": {
+            "description": "User nicht gefunden."
+          }
+        }
+      },
+    },
+  "definitions": {
+    "List": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "List"
+      }
+    },
+    "Entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+		"beschreibung": {
+          "type": "string"
+		},
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "list": {
+          "$ref": "#/definitions/List"
+        }
+      },
+      "required": [
+         "id",
+         "name",
+         "user",
+         "list"
+	  ],      
+      "xml": {
+        "name": "Entry"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+      },
+      "xml": {
+        "name": "User"
+      }
+     },
+    },
+   },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/DerTim0703/Todo-List/1.0.0",
+  "schemes": [
+    "https",
+    "http"
+  ]
+}
